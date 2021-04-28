@@ -1,4 +1,4 @@
-// 官方 
+// -----------官方内置类型------------
 
 /** 从类型 T 中根据 Key 筛选, 返回新类型 */
 // type Pick<T, K extends keyof T> = {
@@ -73,6 +73,25 @@ type KeyofOmitType<T, U> = keyof OmitType<T, U>;
 // -> 'c' 获取所有类型不为number且不为string的key集合
 
 
-type arr = [10, 20, 30]
-type key = Exclude<KeyofPickType<arr, number>, 'length' | number | '0'>
-type X = arr[key]
+/** 获取元组类型中第一个元素的类型 */
+type First<T extends any[]> = T extends [infer F, ...any] ? F : never;
+// type FirstDemo1 = First<[1, 2, 3]> // -> 1 
+// type FirstDemo2 = First<[string, number, Promise<any>]> // -> string
+
+
+/** 获取元组类型中除了第一个元素以外的其他类型 */
+type ExcludeFirst<T extends any[]> = T extends [any, ...infer F] ? F : never;
+// type ExcludeFirstDemo1 = ExcludeFirst<[1, 2, 3]> // -> [2, 3]
+// type ExcludeFirstDemo2 = ExcludeFirst<[string, number, Promise<any>]> // -> [number, Promise<any>]
+
+
+/** 获取元组类型中最后一个元素的类型 */
+type Last<T extends any[]> = T extends [...infer _, infer F] ? F : never
+// type LastDemo1 = Last<[1, 2, 3]> // -> 3
+// type LastDemo2 = Last<[string, number, Promise<any>]> // -> Promise<any>
+
+
+/** 获取元组类型中除了最后一个元素以外的其他类型 */
+type ExcludeLast<T extends any[]> = T extends [...infer F, any] ? F : never;
+// type ExcludeLastDemo1 = ExcludeLast<[1, 2, 3]> // -> [1, 2]
+// type ExcludeLastDemo2 = ExcludeLast<[string, number, Promise<any>]> // -> [string, number]

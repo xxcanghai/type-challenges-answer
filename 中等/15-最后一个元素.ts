@@ -1,21 +1,20 @@
 
-
-
 /* _____________ 你的代码 _____________ */
 
-// type Last<T extends any[]> = T[1] extends undefined ? true : false
 
-type source = [3, 2, 1]
-type str = 1 | 2 | 3
-// type Values<T extends any[]> = T[number]
-type Values = source[number]
+// 写了很多遍，最终还是利用递归写出来了（并不是最佳解决方案）：
+type ExcludeFirst<T extends any[]> = T extends [any, ...infer F] ? F : never;
+type Last<T extends any[]> = T extends [infer F] ? F : Last<ExcludeFirst<T>>;
 
-type B = Exclude<Values, source[0]>
-type D = [str]
-type Last<T extends any[]> = Exclude<T[number], T[0]> extends never ? T[0] : Exclude<T[number], T[0]>//Last<[...Exclude<T[number],T[0]>]>
-type UnionLast<T>=Exclude<, T[0]> extends never ? T[0] : Exclude<T[number], T[0]>
 
-type A = UnionLast<1|2|3>
+// 网友的解决方案：
+// 因为最后一个元素的index是length-1,而ts类型不能进行运算所以 人为增加一个元素后读取其length属性，得到最后一个元素的类型，简直思路清奇，大开眼界
+type Last2<T extends any[]> =[never, ...T][T['length']];
+
+// 网友的解决方案2：
+// 此解决方案应该是标准解决方案，没有使用其他类型组合，也非递归或读取length属性等骚操作。
+type Last3<T extends any[]> = T extends [...infer _, infer F] ? F : never
+
 
 /* _____________ 测试用例 _____________ */
 import { Equal, Expect } from '@type-challenges/utils'
