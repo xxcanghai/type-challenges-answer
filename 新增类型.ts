@@ -74,24 +74,37 @@ type KeyofOmitType<T, U> = keyof OmitType<T, U>;
 
 
 /** 获取元组类型中第一个元素的类型 */
-type First<T extends any[]> = T extends [infer F, ...any] ? F : never;
+type First<T extends any[]> = T extends [infer U, ...any] ? U : never;
 // type FirstDemo1 = First<[1, 2, 3]> // -> 1 
 // type FirstDemo2 = First<[string, number, Promise<any>]> // -> string
 
 
 /** 获取元组类型中除了第一个元素以外的其他类型 */
-type ExcludeFirst<T extends any[]> = T extends [any, ...infer F] ? F : never;
+type ExcludeFirst<T extends any[]> = T extends [any, ...infer U] ? U : never;
 // type ExcludeFirstDemo1 = ExcludeFirst<[1, 2, 3]> // -> [2, 3]
 // type ExcludeFirstDemo2 = ExcludeFirst<[string, number, Promise<any>]> // -> [number, Promise<any>]
 
 
 /** 获取元组类型中最后一个元素的类型 */
-type Last<T extends any[]> = T extends [...infer _, infer F] ? F : never
+type Last<T extends any[]> = T extends [...infer _, infer U] ? U : never
 // type LastDemo1 = Last<[1, 2, 3]> // -> 3
 // type LastDemo2 = Last<[string, number, Promise<any>]> // -> Promise<any>
 
 
 /** 获取元组类型中除了最后一个元素以外的其他类型 */
-type ExcludeLast<T extends any[]> = T extends [...infer F, any] ? F : never;
+type ExcludeLast<T extends any[]> = T extends [...infer U, any] ? U : never;
 // type ExcludeLastDemo1 = ExcludeLast<[1, 2, 3]> // -> [1, 2]
 // type ExcludeLastDemo2 = ExcludeLast<[string, number, Promise<any>]> // -> [string, number]
+
+
+/** 【废弃】将字符串中每一个字符转换为元组 */
+// type StringToArray<S extends string, A extends any[] = []> = // 增加一个可选泛型A（Array），默认为空数组
+//     S extends `${infer Char}${infer Other}` // 判断是否为2个字符
+//     ? StringToArray<Other, [...A, Char]> // 如果是则递归调用，将第一个字符存入数组并续上后续字符，同时将剩余字符串调用自身
+//     : A; // 当最后一个字符时返回所有数组
+// type StringToArrayDemo = StringToArray<'123'> // -> ["1", "2", "3"]
+
+
+/** 将字符串中每一个字符转换为元组 */
+type StringToArray<T extends string> = T extends `${infer L}${infer R}` ? [`${L}`, ...StringToArray<`${R}`>] : [];
+type StringToArrayDemo = StringToArray<'123'> // -> ["1", "2", "3"]

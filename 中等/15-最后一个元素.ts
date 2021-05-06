@@ -2,7 +2,7 @@
 /* _____________ 你的代码 _____________ */
 
 
-// 写了很多遍，最终还是利用递归写出来了（并不是最佳解决方案）：
+// 写了很多遍，最终还是利用递归写出来了（因为使用了两个类型，所以并不是最佳解决方案）：
 type ExcludeFirst<T extends any[]> = T extends [any, ...infer F] ? F : never;
 type Last<T extends any[]> = T extends [infer F] ? F : Last<ExcludeFirst<T>>;
 
