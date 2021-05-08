@@ -12,8 +12,8 @@ type UnionToTuple<T> = (
             ? (u: U) => any
             : never
         ) extends (v: infer V) => any
-        ? V
-        : never
+            ? V
+            : never
         : never
     ) extends (_: any) => infer W
     ? [...UnionToTuple<Exclude<T, W>>, W]

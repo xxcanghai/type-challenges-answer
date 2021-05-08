@@ -68,13 +68,3 @@ type cases = [
     Expect<Equal<ReplaceKeys<Nodes, 'name' | 'flag', { name: number; flag: string }>, ReplacedNodes>>,
     Expect<Equal<ReplaceKeys<Nodes, 'name', { aa: number }>, NodesNoName>>,
 ]
-
-
-
-/* _____________ Further Steps _____________ */
-/*
-  > Share your solutions: https://tsch.js.org/1130/answer
-  > View solutions: https://tsch.js.org/1130/solutions
-  > More Challenges: https://tsch.js.org
-*/
-
