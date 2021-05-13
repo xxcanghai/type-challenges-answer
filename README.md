@@ -1,4 +1,4 @@
-# type-challenges-answer
+# TypeScript 挑战题目「type-challenges」的答案与解析
 TypeScript 挑战题目「type-challenges」的解决方案
 
 题目来源：[type-challenges](https://github.com/type-challenges/type-challenges/blob/master/README.zh-CN.md)
